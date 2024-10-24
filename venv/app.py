@@ -52,7 +52,7 @@ def processPayment(data, customer_id, token_card):
         paymentInfo = {
             "token_card": token_card,
             "customer_id": customer_id,
-            "doc_type": 'CC',
+            "doc_type": "DNI",
             "doc_number": data["doc_number"],
             "name": data["name"],
             "last_name": data["last_name"],
@@ -68,6 +68,8 @@ def processPayment(data, customer_id, token_card):
             "tax_base": data["value"],
             "currency": "COP",
         }
+        # Imprimir paymentInfo para depurar
+        print("Payment Info: ", json.dumps(paymentInfo, indent=4))
         response = epayco.charge.create(paymentInfo)
         return response
     except Exception as e:
@@ -109,4 +111,4 @@ def payment():
     return jsonify(payment_response), 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
